@@ -34,7 +34,7 @@ public class Oberfläche extends JFrame{
 	private int sec;
 //	private Point point;
 	private int count;
-	private asd point;
+//	private asd point;
 	private JPanel checkpanel;
 	private JLabel pointstr;
 	
@@ -49,12 +49,10 @@ public class Oberfläche extends JFrame{
 		this.setTitle("Aufgabe1");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 400);
-		contentPane = new JPanel();
+		contentPane = new JPanel(new BorderLayout());
 		contentPane.setBackground(Color.BLACK);
 		contentPane.setForeground(Color.BLACK);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		
 		//Create Start Button, to start whole event
@@ -82,13 +80,13 @@ public class Oberfläche extends JFrame{
 		checkpanel = new JPanel();
 		checkpanel.setBounds(0, 336, 786, 27);
 		contentPane.add(checkpanel);
-		checkpanel.add(rdbtnJa, CENTER_ALIGNMENT);
-		checkpanel.add(rdbtnNein, CENTER_ALIGNMENT);
-		
+		checkpanel.add(rdbtnJa, BorderLayout.CENTER);
+		checkpanel.add(rdbtnNein, BorderLayout.CENTER);
+
 		pointstr = new JLabel("X");
 		pointstr.setForeground(Color.WHITE);
-		//pointstr.setBounds(294, 192, 6, 13);
-		contentPane.add(pointstr);
+		pointstr.setBounds(294, 192, 6, 13);
+		contentPane.add(pointstr, BorderLayout.CENTER);
 		//contentPane.add(btnGrp);
 		
 		//Variablen
@@ -117,8 +115,8 @@ public class Oberfläche extends JFrame{
 		//--
 		checkpanel.setVisible(false);
 		pointstr.setVisible(false);
-		point.setforeground(new Color(sec, sec, sec));
-		point.setVisible(true);
+//		point.setforeground(new Color(sec, sec, sec));
+//		point.setVisible(true);
 		
 		try {
 			Thread.sleep(20000);
@@ -126,7 +124,7 @@ public class Oberfläche extends JFrame{
 			e.printStackTrace();
 		}
 		
-		point.setVisible(false);
+//		point.setVisible(false);
 		pointstr.setVisible(true);
 		checkpanel.setVisible(true);
 		choice();
