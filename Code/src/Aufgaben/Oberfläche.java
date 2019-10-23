@@ -21,7 +21,7 @@ import javax.swing.JRadioButton;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-public class Oberfl√§che extends JFrame{
+public class Oberfl‰che extends JFrame{
 
 	private JPanel contentPane;
 	private JButton btnStart;
@@ -44,7 +44,7 @@ public class Oberfl√§che extends JFrame{
 	 * Create the frame.
 	 */
 //-----------------------------------------------------------------------------
-	public Oberfl√§che() {
+	public Oberfl‰che() {
 //-----------------------------------------------------------------------------
 		this.setTitle("Aufgabe1");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,7 +172,7 @@ public class Oberfl√§che extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Oberfl√§che frame = new Oberfl√§che();
+					Oberfl‰che frame = new Oberfl‰che();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
