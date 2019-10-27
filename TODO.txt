@@ -1,6 +1,0 @@
-TODO im Code:
-
-- begrenzen auf 6 Durchläufe
-- Entscheidung, wie der Punkt dargestellt werden soll (z.B. Canvas oder Graphic Objekt)
-- ActionPerform des Startbuttons realisieren
-- Was Passiert mit der "Auswertung"
