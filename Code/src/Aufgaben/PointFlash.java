@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,12 +32,17 @@ public class PointFlash extends JPanel implements ActionListener {
     private JButton btnStart = new JButton("start");
     private JLabel labelX = new JLabel("X");
     private Point point = new Point();
-    private int pointSize = 2;	//Wenn die größe 1 ist, ist der Punkt nicht mehr sichtbar
+    private int pointSize = 2;	//Wenn die grï¿½ï¿½e 1 ist, ist der Punkt nicht mehr sichtbar
 	private String status = new String();
 	private String answer = new String();
 	private int diff = 0;
-	private int sec = 0;
+//	private int sec = 0;
+	private int sec;
 	private int count = 0;
+	
+	private int delay = 300;
+	private int[] startingPointUeberschwelig = {255, 200, 150, 115, 100, 80};
+	private int[] startingPoinUnterschwaelig = {0, 10, 15, 30, 45, 60};
 
     public PointFlash(int width, int height) {
         setLayout(null);
@@ -65,6 +72,36 @@ public class PointFlash extends JPanel implements ActionListener {
         btnStart.addActionListener(this);
         updateSize(width, height);
     }
+    /**
+     * 
+     */
+    public void run() {
+    	if(status.equals("")) {
+        	// create random object
+            Random randomno = new Random();
+            // get next next boolean value 
+            boolean chooseState = randomno.nextBoolean();
+            //
+            if(chooseState) {
+            	status = new String("ueberschwellig");
+            } else if(!chooseState) {
+            	status = new String("unterschwellig");
+            }
+        	getStateStartingPoint();
+    	}
+    }
+    /**
+     * 
+     * @return 
+     */
+    public void getStateStartingPoint() {
+    	if(status.equals("ueberschwellig")) {
+			sec = startingPointUeberschwelig[new Random().nextInt(7)];
+		} else if(status.equals("unterschwellig")) {
+			sec =  startingPoinUnterschwaelig[new Random().nextInt(7)];
+		}
+		count++;
+    }
 
     /**
      * Receives messages from button start and point's timer.
@@ -73,44 +110,59 @@ public class PointFlash extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     	System.out.println("----------");
     	System.out.println("actionPerformed()");
+    	boolean isStatusChanged = false;
+    	
         Object src = e.getSource();
-        System.out.println("src :" + src.toString() );
+        System.out.println("src :" + src.toString());
+        //---------------------------------------------------------------------
         if (src == btnStart) {
-            showPoint(2000);
+            showPoint(delay);
             btnStart.setVisible(false);
             checkPanel.setVisible(true);
-            count++;
-        } else if (src == timer) {
+            run();
+        //---------------------------------------------------------------------
+        } else if (src == timer&& isStatusChanged == false) {
         	System.out.println("actionPerform timer");
             showX();
-        } else if (src == rdbtnJa && count <=6) {
+        //---------------------------------------------------------------------
+        } else if (src == rdbtnJa) {
         	System.out.println("actionPerform rdbtnja");
         	if(status.equals("ueberschwellig")) {
 				diff = -20;
+				
+				isStatusChanged = false;
 			} else {
 				sec = 255;
 				diff = 0;
 				status = "ueberschwellig";
+
+				isStatusChanged = true;
 			}
 			answer = "JA";
-			count++;
-        	showPoint(2000);
-        } else if (src == rdbtnNein && count <6) {
+        	showPoint(delay);
+        //---------------------------------------------------------------------
+        } else if (src == rdbtnNein) {
         	System.out.println("actionPerform rdbtnNein");
         	if(status.equals("ueberschwellig")) {
 				sec = 0;
 				diff = 0;
 				status = "unterschwellig";
+
+				isStatusChanged = true;
 			} else {
 				diff = 20;
+				
+				isStatusChanged = false;
 			}
 			answer = "NEIN";
-			count++;
-        	showPoint(2000);
-        } else if (count > 6) {
-        	timer.stop();
-		}
+        	showPoint(delay);
+        }
         System.out.println("Light Point status: " + status + " sec: " + sec + " answer: " + answer + " diff: " + diff + " count: " + count);
+        
+        if(isStatusChanged && count > 7) {
+        	getStateStartingPoint();
+        	isStatusChanged = false;
+        }
     }
 
     @Override
@@ -155,7 +207,11 @@ public class PointFlash extends JPanel implements ActionListener {
         labelX.setVisible(true);
         checkPanel.setVisible(true);
     }
-
+    /**
+     * 
+     * @param width
+     * @param height
+     */
     private void updateSize(int width, int height) {
 //        setPreferredSize(new Dimension(width, height));
         int dimX = (int) (btnStart.getFont().getSize() * 2);
@@ -172,11 +228,14 @@ public class PointFlash extends JPanel implements ActionListener {
 		checkPanel.setBounds(0, height-33, width, 33);
 
     }
-    
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("draw point at center");
+        frame.setTitle("Aufgabe 1");
         frame.add(new PointFlash(700, 300));
         frame.pack();
         frame.setResizable(false);
