@@ -1,250 +1,250 @@
 package Aufgaben;
+/**
+ * @author Dogan Alkan, Matrikelnummer: 835118
+ */
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JRadioButton;
-import javax.swing.SwingUtilities;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class Aufgabe1 extends JFrame implements ActionListener {
-
-	private JPanel contentPane;
-	private JPanel checkPanel;
-	private JPanel pointPanel;
+public class Aufgabe1 extends JPanel implements ActionListener {
 	
-	private JRadioButton rdbtnJa;
-	private JRadioButton rdbtnNein;
-	private ButtonGroup btnGroup;
+	private JPanel checkPanel = new JPanel();
+	private JRadioButton rdbtnJa = new JRadioButton("Ja");
+	private JRadioButton rdbtnNein = new JRadioButton("Nein");
+	private ButtonGroup btnGroup = new ButtonGroup();
 	
-	private JButton btnStart;
-	private JLabel pointstr;
-	private drawPoint point;
-	
-	private String status;
-	private String answer;
-	private int diff;
+    private Timer timer = null;
+    private JButton btnStart = new JButton("Start");
+    private JLabel labelX = new JLabel("X");
+    private Point point = new Point();
+	private String answer = new String();
+	private String status = null;
+	private int diff = 0;
 	private int sec;
-	private int count;
-
+	private int count = 0;
+	
+	private int delay = 300;
+	
 	/**
-	 * Launch the application.
+	 * 
+     * @param width Breite des JPanels
+     * @param height Höhe des JPanels
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Aufgabe1 frame = new Aufgabe1();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    public Aufgabe1(int width, int height) {
+        setLayout(null);
+        setBackground(Color.BLACK);
+        btnStart.setPreferredSize(new Dimension(width/4, btnStart.getFont().getSize()*2));
 
-	/**
-	 * Create the frame.
-	 */
-	public Aufgabe1() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 300);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		btnStart = new JButton("Start");
-		btnStart.setBounds(0, 0, 684, 23);
-		contentPane.add(btnStart);
-		
-			checkPanel = new JPanel();
-			checkPanel.setBounds(0, 229, 684, 33);
-			checkPanel.setVisible(false);;
-			contentPane.add(checkPanel);
-
+        labelX.setHorizontalAlignment(JLabel.CENTER);
+        labelX.setForeground(Color.WHITE);
+        
 			btnGroup = new ButtonGroup();
 			
-			rdbtnJa = new JRadioButton("Ja");
-			rdbtnJa.setActionCommand("RadioButton_Ja");
 			rdbtnJa.addActionListener(this);
 			checkPanel.add(rdbtnJa);
 			btnGroup.add(rdbtnJa);
 			
-			rdbtnNein = new JRadioButton("Nein");
-			rdbtnNein.setActionCommand("RadioButton_Nein");
 			rdbtnNein.addActionListener(this);
 			checkPanel.add(rdbtnNein);
 			btnGroup.add(rdbtnNein);
-			
-		pointPanel = new JPanel(new BorderLayout());
-		pointPanel.setBackground(Color.BLACK);
-		pointPanel.setBounds(0, 23, 684, 209);
-		contentPane.add(pointPanel);
-		
-		pointstr = new JLabel("X");
-		pointstr.setForeground(Color.WHITE);
-		pointstr.setVerticalAlignment(JLabel.CENTER);
-		pointstr.setHorizontalAlignment(JLabel.CENTER);
-		pointPanel.add(pointstr, BorderLayout.CENTER);
-		
-		point = new drawPoint();
-		point.setBackground(new Color(sec,sec,sec));
-		point.setPreferredSize(new Dimension(700, 300));
-		pointPanel.add(point, BorderLayout.CENTER);
-		point.setVisible(false);
-		
-		answer = new String();
-		status = new String();
-		diff = 0;
-		sec = 0;
-		count = 0;
-		run();
-	}
-	
-	public void run() {
-		System.out.println("-----------------");
-		System.out.println("run() Method");
-		
-		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				createLightPoint();
-				
-				btnStart.setEnabled(false);
-				btnStart.setVisible(false);
-				
-				pointPanel.setBounds(0, 0, 684, 242);
-				
-				System.out.println("Start Button ActionPerformed");
-			}
-		});
-		
-		System.out.println("End run() Method");
-	}
-	
 
-    protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-        // draw point only if labelX is not visible
-        if (!pointstr.isVisible()) {
-//            g.setColor(color);
-            g.setColor(new Color(sec, sec, sec));
-            g.fillOval(pointPanel.getWidth()/2, pointPanel.getHeight()/2, 2, 2);
-        }
+            checkPanel.setVisible(false);
+		
+        add(labelX);
+        add(btnStart);
+		add(checkPanel);
+        btnStart.addActionListener(this);
+        updateSize(width, height);
     }
-//	private void createLightPoint() {
-//		System.out.println("-----------------");
-//		System.out.println("Enter createLightPoint()");
-//		
-//		btnGroup.clearSelection();
-//		lblX.setVisible(false);
-//		lblX.repaint();
-//		checkPanel.setVisible(false);
-//		//point.setForeground(new Color(ec,sec,sec));
-//		//point.setVisible(true);
-//		
-//		System.out.println("Bevor Sleep");
-//		
-//		try {
-//			Thread.sleep(2000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		System.out.println("After Sleep");
-////		point.setVisible(false);
-//		lblX.setVisible(true);
-//		checkPanel.setVisible(true);
-//	}
-	private void createLightPoint() {
-		System.out.println("-----------------");
-		System.out.println("Enter createLightPoint()");
-        btnGroup.clearSelection();
-        
-        setVisibility(true);
-
-		
-        Thread th = new Thread(new Runnable() {
-            public void run() {
-                try { Thread.sleep(2000); } catch (InterruptedException ex) {}
-                setVisibility(false);
+    /**
+     * Dient als Startpunkt, nach dem drücken des Start Buttons wird diese Funktion,
+     * als ersten und nur einamlig, ausgeführt.
+     */
+    public void run() {
+    	if(status == null) {
+        	// create random object
+            Random randomno = new Random();
+            // get next next boolean value 
+            boolean chooseState = randomno.nextBoolean();
+            //
+            
+            if(new Random().nextBoolean()) {
+            	status = new String("ueberschwellig");
+            } else if(!chooseState) {
+            	status = new String("unterschwellig");
             }
-        });
-        th.start();
-	}
-	private void setVisibility(final boolean value) {
-	    if (SwingUtilities.isEventDispatchThread()) {
-	    	point.setForeground(new Color(sec,sec,sec));
-	        pointstr.setVisible(!value);
-	        checkPanel.setVisible(!value);
-//	    	point.setVisible(value);
-	    } else {
-	        SwingUtilities.invokeLater(new Runnable() {
-	            public void run() { setVisibility(value); }
-	        });
-	    }
-	}
-	class drawPoint extends JLabel {
-		@Override
-		public void paintComponent(Graphics g) {
-			if(!pointstr.isVisible()) {
-				System.out.println("############################");
-				System.out.println("drawPoint - paintComponent()");
-			    super.paintComponent(g);
-	
-			    Graphics2D pointer = (Graphics2D) g;
-	
-			    pointer.setColor(Color.WHITE);
-			    pointer.fillOval(pointPanel.getWidth()/2, pointPanel.getHeight()/2, 2, 2);
-	//		    setSize(1, 1);
-			}
-		  }
-	}
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-		System.out.println("-----------------");
-		System.out.println("Enter actionPerformed()");
-		if((ae.getActionCommand().equals("RadioButton_Ja") || ae.getActionCommand().equals("RadioButton_Nein")) && count <= 6) {
-			if(ae.getActionCommand().equals("RadioButton_Ja")) {
-				System.out.println("RadioButton_Ja");
-				if(status.equals("ueberschwellig")) {
+        	getStateStartingPoint();
+    	}
+    }
+    
+    /**
+     * Wählt einen Startpunkt für den nächsten Durchlauf aus.
+     */
+    public void getStateStartingPoint() {
+    	if(status.equals("ueberschwellig")) {
+        	int[] startingPointUeberschwelig = {255, 200, 150, 115, 100, 80};
+			sec = startingPointUeberschwelig[new Random().nextInt(6)];
+		} else if(status.equals("unterschwellig")) {
+	    	int[] startingPoinUnterschwaelig = {0, 10, 15, 30, 45, 60};
+			sec =  startingPoinUnterschwaelig[new Random().nextInt(6)];
+		}
+		count++;
+    }
+
+    /**
+     * Receives messages from button start and point's timer.
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    	boolean isStatusChanged = false;
+
+	    Object src = e.getSource();
+		if(count < 7) {
+		    //---------------------------------------------------------------------
+		    if (src == btnStart) {
+		        run();
+		        showPoint(delay);
+		        btnStart.setVisible(false);
+		        checkPanel.setVisible(true);
+		    //---------------------------------------------------------------------
+		    } else if (src == timer && isStatusChanged == false) {
+		        showX();
+		    //---------------------------------------------------------------------
+		    } else if (src == rdbtnJa) {
+		    	if(status.equals("ueberschwellig")) {
 					diff = -20;
+					
+					isStatusChanged = false;
 				} else {
 					sec = 255;
 					diff = 0;
 					status = "ueberschwellig";
+		
+					isStatusChanged = true;
 				}
 				answer = "JA";
-				
-			} else if(ae.getActionCommand().equals("RadioButton_Nein")) {
-				System.out.println("RadioButton_Nein");
-				if(status.equals("ueberschwellig")) {
+		    	showPoint(delay);
+		    //---------------------------------------------------------------------
+		    } else if (src == rdbtnNein) {
+		    	if(status.equals("ueberschwellig")) {
 					sec = 0;
 					diff = 0;
 					status = "unterschwellig";
+		
+					isStatusChanged = true;
 				} else {
 					diff = 20;
+					
+					isStatusChanged = false;
 				}
 				answer = "NEIN";
+		    	showPoint(delay);
+		    }
+		    System.out.println("Light Point status: " + status + " sec: " + sec + " answer: " + answer + " diff: " + diff + " count: " + count);
+		    
+		    if(isStatusChanged) {
+		    	getStateStartingPoint();
+		    	isStatusChanged = false;
+		    }
+		} else {
+			if(timer.isRunning()) {
+				timer.stop();
 			}
+			timer = null;
+			checkPanel.setVisible(false);
 		}
-		
-		System.out.println("Light Point. status: " + status + " sec: " + sec + " answer: " + answer + " diff: " + diff);
-		
-		//in .txt Datei schreiben!
-		createLightPoint();
-	}
+    }
+    
+    /**
+     * Zeichnet einen Punkt auf den JPanel. 
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        int pointSize = 2;	//Wenn die grösse 1 ist, ist der Punkt nicht mehr sichtbar
+
+        if (!labelX.isVisible()) {
+            g.setColor(new Color(sec, sec, sec));
+            g.fillOval(point.x, point.y, pointSize, pointSize);
+        }
+    }
+
+    /**
+     * Setzt lableX auf unsichtbar und startet einen timer welches 
+     * {@link #actionPerformed(ActionEvent)} nach einer bestimmten Zeit aufruft.
+     *
+     * @param duration
+     */
+    private void showPoint(int duration) {
+    	sec = sec + diff;
+    	
+    	checkPanel.setVisible(false);
+        labelX.setVisible(false);
+        
+        timer = new Timer(duration, this);
+        timer.start();
+    }
+
+    /**
+     * Stopt den Timer welches durch {@link #showPoint(int)} aktiviert wurde und
+     * setzt labelX auf sichtbar.
+     */
+    private void showX() {
+    	btnGroup.clearSelection();
+        if (timer != null) {
+            timer.stop();
+        }
+        timer = null;
+        
+        labelX.setVisible(true);
+        checkPanel.setVisible(true);
+    }
+    /**
+     * Setzt die grössen und propotionen der GUI.
+     * @param width Breite des JPanels
+     * @param height Höhe des JPanels
+     */
+    private void updateSize(int width, int height) {
+        int dimX = (int) (btnStart.getFont().getSize() * 2);
+        labelX.setBounds((width - dimX) / 2, (height - dimX) / 2, dimX, dimX);
+        int startWidth = width / 5;
+        
+        btnStart.setBounds(0, 0, width, 23);
+        point.x = width / 2;
+        point.y = height / 2;
+        
+		checkPanel.setBounds(0, height-33, width, 33);
+
+        setPreferredSize(new Dimension(width, height));
+
+    }
+    /**
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Aufgabe 1");
+        frame.add(new Aufgabe1(700, 300));
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
 }
+
+//05.11.2019 18:23 Kareem Wegner
