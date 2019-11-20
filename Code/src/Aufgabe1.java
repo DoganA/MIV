@@ -1,5 +1,9 @@
-package Aufgaben;
-
+/**
+ * @author Dogan Alkan, s838118
+ * @since   1.0
+ * @version	2.0
+ * @date 07.10.2019
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,13 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.Timer;
-/**
- * TODO RadioButton disselect, StartButton after press deactivate,
- * @author Dogan
- *
- */
+
 @SuppressWarnings("serial")
-public class PointFlash extends JPanel implements ActionListener {
+public class Aufgabe1 extends JPanel implements ActionListener {
 	
 	private JPanel checkPanel = new JPanel();
 	private JRadioButton rdbtnJa = new JRadioButton("Ja");
@@ -32,34 +32,36 @@ public class PointFlash extends JPanel implements ActionListener {
     private JButton btnStart = new JButton("start");
     private JLabel labelX = new JLabel("X");
     private Point point = new Point();
-    private int pointSize = 2;	//Wenn die gr��e 1 ist, ist der Punkt nicht mehr sichtbar
-	private String status = new String();
+	private String status = null;
 	private String answer = new String();
 	private int diff = 0;
-//	private int sec = 0;
 	private int sec;
 	private int count = 0;
 	
-	private int delay = 300;
 	private int[] startingPointUeberschwelig = {255, 200, 150, 115, 100, 80};
 	private int[] startingPoinUnterschwaelig = {0, 10, 15, 30, 45, 60};
-
-    public PointFlash(int width, int height) {
+	
+	/**
+	 * 
+	 * @param width	Breite des JPanels
+	 * @param height Höhe des JPanels
+	 */
+    public Aufgabe1(int width, int height) {
         setLayout(null);
         setBackground(Color.BLACK);
+        
         btnStart.setPreferredSize(new Dimension(width/4, btnStart.getFont().getSize()*2));
-//        labelX.setBorder(BorderFactory.createLineBorder(color));
+        btnStart.addActionListener(this);
+        
         labelX.setHorizontalAlignment(JLabel.CENTER);
         labelX.setForeground(Color.WHITE);
         
 			btnGroup = new ButtonGroup();
-			
-//			rdbtnJa.setActionCommand("RadioButton_Ja");
+
 			rdbtnJa.addActionListener(this);
 			checkPanel.add(rdbtnJa);
 			btnGroup.add(rdbtnJa);
 			
-//			rdbtnNein.setActionCommand("RadioButton_Nein");
 			rdbtnNein.addActionListener(this);
 			checkPanel.add(rdbtnNein);
 			btnGroup.add(rdbtnNein);
@@ -69,14 +71,14 @@ public class PointFlash extends JPanel implements ActionListener {
         add(labelX);
         add(btnStart);
 		add(checkPanel);
-        btnStart.addActionListener(this);
         updateSize(width, height);
     }
     /**
-     * 
+     * Dient der initialisierung der Status variable.Wird einmalig, nach drücken
+     * des Start Buttons ausgeführt. 
      */
     public void run() {
-    	if(status.equals("")) {
+    	if(status == null) {
         	// create random object
             Random randomno = new Random();
             // get next next boolean value 
@@ -91,14 +93,13 @@ public class PointFlash extends JPanel implements ActionListener {
     	}
     }
     /**
-     * 
-     * @return 
+     * Setzt die variable sec auf einen initialen Wert, abhängig vom status
      */
     public void getStateStartingPoint() {
     	if(status.equals("ueberschwellig")) {
-			sec = startingPointUeberschwelig[new Random().nextInt(7)];
+			sec = startingPointUeberschwelig[new Random().nextInt(6)];
 		} else if(status.equals("unterschwellig")) {
-			sec =  startingPoinUnterschwaelig[new Random().nextInt(7)];
+			sec =  startingPoinUnterschwaelig[new Random().nextInt(6)];
 		}
 		count++;
     }
@@ -108,25 +109,21 @@ public class PointFlash extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-    	System.out.println("----------");
-    	System.out.println("actionPerformed()");
+    	int delay = 300;
     	boolean isStatusChanged = false;
     	
         Object src = e.getSource();
-        System.out.println("src :" + src.toString());
         //---------------------------------------------------------------------
         if (src == btnStart) {
+            run();
             showPoint(delay);
             btnStart.setVisible(false);
             checkPanel.setVisible(true);
-            run();
         //---------------------------------------------------------------------
         } else if (src == timer&& isStatusChanged == false) {
-        	System.out.println("actionPerform timer");
             showX();
         //---------------------------------------------------------------------
         } else if (src == rdbtnJa) {
-        	System.out.println("actionPerform rdbtnja");
         	if(status.equals("ueberschwellig")) {
 				diff = -20;
 				
@@ -142,7 +139,6 @@ public class PointFlash extends JPanel implements ActionListener {
         	showPoint(delay);
         //---------------------------------------------------------------------
         } else if (src == rdbtnNein) {
-        	System.out.println("actionPerform rdbtnNein");
         	if(status.equals("ueberschwellig")) {
 				sec = 0;
 				diff = 0;
@@ -159,29 +155,32 @@ public class PointFlash extends JPanel implements ActionListener {
         }
         System.out.println("Light Point status: " + status + " sec: " + sec + " answer: " + answer + " diff: " + diff + " count: " + count);
         
-        if(isStatusChanged && count > 7) {
+        if(isStatusChanged && count < 7) {
         	getStateStartingPoint();
         	isStatusChanged = false;
         }
     }
-
+    
+    /**
+     * Wird von der Oberklasse aufgerufen. zeichnet einen Punkt auf die Oberflche. 
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         if (!labelX.isVisible()) {
-//            g.setColor(color);
-        	System.out.println(sec);
+        	int pointSize = 2;	//Wenn die grösse 1 ist, ist der Punkt nicht mehr sichtbar
+        	
             g.setColor(new Color(sec, sec, sec));
             g.fillOval(point.x, point.y, pointSize, pointSize);
         }
     }
 
     /**
-     * Sets lableX invisible and starts a timer which calls
-     * {@link #actionPerformed(ActionEvent)} after duration.
+     * Setzt lableX auf nicht Sichbar und start den timmer welchesdie Funktion
+     * {@link #actionPerformed(ActionEvent)} nach einer weile (duration).
      *
-     * @param duration
+     * @param duration Dauer des Timers bzw. Verzögerung
      */
     private void showPoint(int duration) {
     	sec = sec + diff;
@@ -194,13 +193,12 @@ public class PointFlash extends JPanel implements ActionListener {
     }
 
     /**
-     * Stops timer activated by {@link #showPoint(int)} and sets labelX visible.
+     * Stopt den timer welches durch {@link #showPoint(int)} activiert wurde und setzt labelX auf Sichtbar.
      */
     private void showX() {
     	btnGroup.clearSelection();
         if (timer != null) {
             timer.stop();
-            System.out.println("timer stoped");
         }
         timer = null;
         
@@ -208,25 +206,22 @@ public class PointFlash extends JPanel implements ActionListener {
         checkPanel.setVisible(true);
     }
     /**
-     * 
-     * @param width
-     * @param height
+     * Propotionen der Komponenten der Oberfläche berechnen und setzen.
+     * @param width	Breite des JPanels
+	 * @param height Höhe des JPanels
      */
     private void updateSize(int width, int height) {
-//        setPreferredSize(new Dimension(width, height));
+    	//Propotion des labelX, also der sichtbaren x berechnen:
         int dimX = (int) (btnStart.getFont().getSize() * 2);
         labelX.setBounds((width - dimX) / 2, (height - dimX) / 2, dimX, dimX);
-        int startWidth = width / 5;
-//        start.setBounds((width - startWidth) / 2, (height - dimX), startWidth, dimX);
+        
         btnStart.setBounds(0, 0, width, 23);
+		checkPanel.setBounds(0, height-33, width, 33);
+		//Position des Punktes berechnen
         point.x = width / 2;
         point.y = height / 2;
+        
         setPreferredSize(new Dimension(width, height));
-        
-        
-//		checkPanel.setBounds(0, 229, 684, 33);
-		checkPanel.setBounds(0, height-33, width, 33);
-
     }
     /**
      * 
@@ -236,7 +231,7 @@ public class PointFlash extends JPanel implements ActionListener {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Aufgabe 1");
-        frame.add(new PointFlash(700, 300));
+        frame.add(new Aufgabe1(700, 300));
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
