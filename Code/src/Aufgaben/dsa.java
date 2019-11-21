@@ -20,7 +20,7 @@ import javax.swing.JRadioButton;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class Aufgabe1 extends JPanel implements ActionListener {
+public class dsa extends JPanel implements ActionListener {
 	
 	private JPanel checkPanel = new JPanel();
 	private JRadioButton rdbtnJa = new JRadioButton("Ja");
@@ -42,7 +42,7 @@ public class Aufgabe1 extends JPanel implements ActionListener {
      * @param width Breite des JPanels
      * @param height Höhe des JPanels
 	 */
-    public Aufgabe1(int width, int height) {
+    public dsa(int width, int height) {
         setLayout(null);
         setBackground(Color.BLACK);
         btnStart.setPreferredSize(new Dimension(width/4, btnStart.getFont().getSize()*2));
@@ -150,11 +150,7 @@ public class Aufgabe1 extends JPanel implements ActionListener {
 		
 					isStatusChanged = true;
 				} else {
-					if(sec<=245) {
-						diff = 20;
-					}else {
-						diff = 0;
-					}
+					diff = 20;
 					
 					isStatusChanged = false;
 				}
