@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=Übung3.tex
 
 [Frame0_View0,0]
-TopLine=39
-Cursor=2196
+TopLine=96
+Cursor=4444
 
 [Frame1]
 Flags=0
@@ -36,9 +36,9 @@ Document=setup.tex
 
 [Frame1_View0,0]
 TopLine=24
-Cursor=988
+Cursor=1292
 
 [SessionInfo]
 FrameCount=2
-ActiveFrame=1
+ActiveFrame=0
 
