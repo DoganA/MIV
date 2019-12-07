@@ -49,7 +49,16 @@ bibliography=totoc			% Literaturverzeichnis im Inhaltsverzeichnis aufführen
 
 \usepackage{lmodern} %Type1-Schriftart für nicht-englische Texte
 
-
+%% Bibliographiestil %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+   backend = biber,
+   natbib	 = true,
+	 bibencoding=utf8,
+   style	 = alphabetic,
+   sorting = ynt
+]{biblatex}
+\addbibresource{Literatur.bib}
+\usepackage{csquotes}
 %% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{graphicx} %%Zum Laden von Grafiken
 %\usepackage{subfig} %%Teilabbildungen in einer Abbildung
@@ -92,7 +101,7 @@ bibliography=totoc			% Literaturverzeichnis im Inhaltsverzeichnis aufführen
 %% Angaben zur Standardformatierung des Titels %%%%%%%%%%%%%%%%%%%%%%%%
 %\titlehead{Titelkopf }
 \subject{Multimediale Informationsverarbeitung}
-\title{3. Übung:}
+\title{3. Übung:Lösungen}
 \author{Ihr Name}
 %\and{Der Name des Co-Autoren}
 %\thanks{Fußnote}			% entspr. \footnote im Fließtext
@@ -119,7 +128,7 @@ bibliography=totoc			% Literaturverzeichnis im Inhaltsverzeichnis aufführen
 %% Der Text %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Erste Frage}
 \label{sec:ErsteFrage}
-%\lstinputlisting[language=html]{../index.html}
+\lstinputlisting[language=html]{../index.html}
 
 %\part[Erster Streich]{wenige Erläuterungen}
 \section[Überschriften]{Überschrift und das Inhaltsverzeichnis}
@@ -176,6 +185,7 @@ Viel Spaß! Für Rückfragen, die diese Vorlage betreffen, stehe ich Ihnen gern 
 \pagenumbering{roman}
 \addcontentsline{toc}{chapter}{Quellenverzeichnis}
 \renewcommand{\refname}{Quellenverzeichnis}
-%\bibliography{lib}
+\nocite{*} % adds all entries in the bib file to the bibliography
+\printbibliography
 
 \end{document}
