@@ -17,19 +17,24 @@
 twoside,							% Doppelseiten
 %twocolumn,						% zweispaltiger Satz
 %halfparskip*,				% Absatzformatierung s. scrguide 3.1
-%headsepline,					% Trennline zum Seitenkopf	
-%footsepline,					% Trennline zum Seitenfuß
+headsepline=true,					% Trennline zum Seitenkopf	
+footsepline=true,					% Trennline zum Seitenfuß
 %titlepage,						% Titelei auf eigener Seite
 %normalheadings,			% Überschriften etwas kleiner (smallheadings)
-normal=headings,			% neue Version: Überschriften etwas kleiner (smallheadings)
+headings=normal,
 %idxtotoc,						% Index im Inhaltsverzeichnis
 %liststotoc,					% Abb.- und Tab.verzeichnis im Inhalt
-%bibtotoc,						% Literaturverzeichnis im Inhalt
+%bibtotoc,						% Literaturverzeichnis im Inhalt2
+%index=totoc, 					% Index im Inhaltsverzeichnis aufführen
+listof=totoc,					% Verzeichnisse im Inhaltsverzeichnis aufführen
+bibliography=totoc			% Literaturverzeichnis im Inhaltsverzeichnis aufführen
+%numbers=noenddot,			%Keine Punkte am Ende des TOC
+%toc=flat,						%Flache TOC
 %abstracton,					% Überschrift über der Zusammenfassung an	
 %leqno,   						% Nummerierung von Gleichungen links
 %fleqn,								% Ausgabe von Gleichungen linksbündig
 %draft								% überlangen Zeilen in Ausgabe gekennzeichnet
-toc=listof
+%chapterprefix=on,
 ]
 {scrartcl}
 
@@ -44,12 +49,12 @@ toc=listof
 
 \usepackage{lmodern} %Type1-Schriftart für nicht-englische Texte
 
-\include{setup.tex}
+
 %% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
-\usepackage{graphicx} %%Zum Laden von Grafiken
+%\usepackage{graphicx} %%Zum Laden von Grafiken
 %\usepackage{subfig} %%Teilabbildungen in einer Abbildung
 %\usepackage{pst-all} %%PSTricks - nicht verwendbar mit pdfLaTeX
-\usepackage{listings}             % Include the listings-package
+
 %% Beachten Sie:
 %% Die Einbindung einer Grafik erfolgt mit \includegraphics{Dateiname}
 %% bzw. über den Dialog im Einfügen-Menü.
@@ -61,21 +66,18 @@ toc=listof
 %% können Sie u.a. folgende Grafikformate verwenden:
 %%   .eps  .ps  .bmp  .pict  .pntg
 
-%%Abstände zu Seitenränder definieren
-\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+
 %% Bibliographiestil %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{natbib}
-
+\input{setup}
 \begin{document}
-
 \renewcommand*{\thesection}{\arabic{section}}
 \renewcommand*{\thesubsection}{\alph{subsection}}
 %\renewcommand*{\p@subsection}{\thesection}
 \renewcommand*{\thesubsubsection}{\arabic{subsubsection}}
 %\renewcommand*{\p@subsubsection}{\p@subsection\thesubsection)
 
-
-\pagestyle{empty} %%Keine Kopf-/Fusszeilen auf den ersten Seiten.
+%\pagestyle{scrheadings} %%Keine Kopf-/Fusszeilen auf den ersten Seiten.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,37 +91,36 @@ toc=listof
 
 %% Angaben zur Standardformatierung des Titels %%%%%%%%%%%%%%%%%%%%%%%%
 %\titlehead{Titelkopf }
-\subject{Modul: Multimediale Informatinsverarbeitung}
-\title{3. Übung: Lösungen}
-\subtitle{Objekt-, Farb- und Bewegungswahrnehmung}
-\author{Dogan Alkan, s12345,\\
-				Amin Saeidi, s12345}
+\subject{Multimediale Informationsverarbeitung}
+\title{3. Übung:}
+\author{Ihr Name}
 %\and{Der Name des Co-Autoren}
 %\thanks{Fußnote}			% entspr. \footnote im Fließtext
-\date{}							% falls anderes, als das aktuelle gewünscht
+%\date{}							% falls anderes, als das aktuelle gewünscht
 %\publishers{Herausgeber}
+
+%% Widmungsseite %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\dedication{Widmung}
 
 \maketitle 						% Titelei wird erzeugt
 
+%% Zusammenfassung nach Titel, vor Inhaltsverzeichnis %%%%%%%%%%%%%%%%%
+%\begin{abstract}
+% Für eine kurze Zusammenfassung des folgenden Artikels.
+% Für die Überschrift s. \documentclass[abstracton].
+%\end{abstract}
+
 %% Erzeugung von Verzeichnissen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\tableofcontents			% Inhaltsverzeichnis
-\listoftables				% Tabellenverzeichnis
-\listoffigures				% Abbildungsverzeichnis
-
-\section{Erstelle die Startseite (Home) einer beliebigen Webseite(Titel, Text, Buttons, Links) unter Berücksichtigung der Gestaltgesetze und Farbwahl.}
-Beim geschriebenen HTML-Code handelt es sich um folgenden:
-
-\lstinputlisting[language=HTML, breaklines=true, caption={Webseite/Home}, label={lst:Webseite}, frame=L]{../index.html}
-
-
-Die Html-Datei wird als extra Datei mit abgegeben.
-\label{sec:AufgabeEins}
-
-\subsection{Drei Gestaltgesetze und eine harmonische Farbauswahl.}
-\label{sec:AufgabeEinsA}
+%\listoftables				% Tabellenverzeichnis
+%\listoffigures				% Abbildungsverzeichnis
 
 
 %% Der Text %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Erste Frage}
+\label{sec:ErsteFrage}
+%\lstinputlisting[language=html]{../index.html}
+
 %\part[Erster Streich]{wenige Erläuterungen}
 \section[Überschriften]{Überschrift und das Inhaltsverzeichnis}
 Die meisten Artikel werden ab \verb#\section{}# gegliedert. Es steht jedoch grundsätzlich auch der sehr gewaltige, übergeordnete Gliederungspunkt \verb#\part{}# zur Verfügung.
@@ -171,5 +172,10 @@ Viel Spaß! Für Rückfragen, die diese Vorlage betreffen, stehe ich Ihnen gern 
 %\setbibpreamble{Präambel}		% Text vor dem Verzeichnis
 %\bibliographystyle{dinat}
 %\bibliography{bibliographie}	% Sie benötigen einen *.bib-Datei
+\newpage
+\pagenumbering{roman}
+\addcontentsline{toc}{chapter}{Quellenverzeichnis}
+\renewcommand{\refname}{Quellenverzeichnis}
+%\bibliography{lib}
 
 \end{document}

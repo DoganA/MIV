@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=Übung3.tex
+MainFile=Uebung3.tex
 UseBibTeX=1
 UseMakeIndex=1
 ActiveProfile=LaTeX ⇨ DVI ⇨ PDF
