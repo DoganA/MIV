@@ -6,7 +6,7 @@ Version=4
 MainFile=Übung3.tex
 UseBibTeX=1
 UseMakeIndex=1
-ActiveProfile=LaTeX ⇨ PDF(biber)
+ActiveProfile=LaTeX ⇨ DVI ⇨ PDF
 ProjectLanguage=en
 ProjectDialect=US
 
