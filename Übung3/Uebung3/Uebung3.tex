@@ -71,10 +71,11 @@ listof=entryprefix,
 %% Bibliographiestil %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[
 	backend = biber
-	, natbib	 = true
+	, natbib	= true
 	, bibwarn = true
 	, bibencoding = utf8
-	, style	 = alphabetic
+	, style = alphabetic
+	, sorting = ydnt,
 	, maxbibnames = 99
 	, date = long
 	, abbreviate = false
@@ -146,6 +147,7 @@ Beim geschriebenen HTML-Code handelt es sich um folgenden:
 
 \lstinputlisting[language=HTML, caption=Webseite]{../index.html} \quelle{ich}
 \cite[vgl.][2]{Hönemann2019:Farbwahrnehmung} \\
+\cite[vgl.][2][10][30]{Hönemann2019:Farbwahrnehmung, Hönemann2019:Bewegungswahrnehmung, Schultz:Gestaltgesetze} \\
 \cite{Hönemann2019:Bewegungswahrnehmung} \\
 \cite{Schultz:Gestaltgesetze}\\
 \cite{GoldsteinE.Bruce2015W:dG}\\
