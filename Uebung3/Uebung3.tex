@@ -1,7 +1,5 @@
-% arara: pdflatex: { shell: on }
-% arara: biber
-% arara: pdflatex: { shell: on }
-% arara: pdflatex: { shell: on }
+%% Basierend auf einer TeXnicCenter-Vorlage von Mark Müller
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Wählen Sie die Optionen aus, indem Sie % vor der Option entfernen  
 % Dokumentation des KOMA-Script-Packets: scrguide
@@ -22,9 +20,13 @@ twoside,							% Doppelseiten
 headsepline=true,				% Trennline zum Seitenkopf	
 footsepline=true,				% Trennline zum Seitenfuß
 %titlepage,						% Titelei auf eigener Seite
+%normalheadings,				% Überschriften etwas kleiner (smallheadings)
 headings=normal,
+%idxtotoc,						% Index im Inhaltsverzeichnis
+%liststotoc,					% Abb.- und Tab.verzeichnis im Inhalt
+%bibtotoc,						% Literaturverzeichnis im Inhalt2
 %index=totoc, 					% Index im Inhaltsverzeichnis aufführen
-listof=totoc,					% Abb.- und Tab.Verzeichnisse im Inhaltsverzeichnis aufführen
+listof=totoc,					% Verzeichnisse im Inhaltsverzeichnis aufführen
 bibliography=totoc,			% Literaturverzeichnis im Inhaltsverzeichnis aufführen
 listof=entryprefix,
 %numbers=noenddot,			%Keine Punkte am Ende des TOC
@@ -34,7 +36,7 @@ listof=entryprefix,
 %fleqn,								% Ausgabe von Gleichungen linksbündig
 %draft								% überlangen Zeilen in Ausgabe gekennzeichnet
 %chapterprefix=on,
-, draft
+%, draft
 ]
 {scrartcl}
 
@@ -71,14 +73,12 @@ listof=entryprefix,
 	backend = biber
 	, natbib	 = true
 	, bibwarn = true
-	, backref = true
 	, bibencoding = utf8
 	, style	 = alphabetic
 	, maxbibnames = 99
 	, date = long
 	, abbreviate = false
-	%, language = ngerman
-	%, refsection = section % benutze automatisch Kapitel als Biobliographie-Abschnitte...
+	, language = ngerman
 	%sorting = ynt
 ]{biblatex}
 %\usepackage[
@@ -94,7 +94,6 @@ listof=entryprefix,
 \addbibresource{Literatur.bib}
 \usepackage{csquotes}
 
-\usepackage{multirow}				%mehrere Zeilen einer bestimmten Spallte zusammenfügen
 
 \input{setup}
 %\input{pdf_info.tex}
@@ -150,32 +149,7 @@ Beim geschriebenen HTML-Code handelt es sich um folgenden:
 \cite{Hönemann2019:Bewegungswahrnehmung} \\
 \cite{Schultz:Gestaltgesetze}\\
 \cite{GoldsteinE.Bruce2015W:dG}\\
-\cites[vgl.][2]{Schultz:Gestaltgesetze}{Hönemann2019:Bewegungswahrnehmung}[][]{GoldsteinE.Bruce2015W:dG}\\
 Die Html-Datei wird als extra Datei mit abgegeben.
-
-
-\begin{table}[htbp]
-	\centering
-		\begin{tabular}{|l|l|l|l|l|l|l|}
-			\hline \multicolumn{2}{|c|}{Eigenschaften} 	 & Model A & Model A & Model B & Model B & \shortstack{Raspberry Pi 2\\ Model B}\\ \hline
-			\multirow{3}{*}{\shortstack{Gesammtgröße\\(in mm)}}& Länge & 93 		 & 70,4  & \multicolumn{3}{|c|}{93}							 \\ \hline
-																					 & Breite& 63,5 	 & 57,2  & \multicolumn{3}{|c|}{6,5}						 \\ \hline
-																					 & Höhe  & 17 	 	 & 12		 & \multicolumn{3}{|c|}{20}							 \\ \hline
-			\multicolumn{2}{|c|}{SoC}            				 & \multicolumn{4}{|c|}{Broadcom BCM2835}& \shortstack{Broadcom\\BCM2836}\\ \hline
-			\multirow{4}{*}{CPU}							 & Typ   & \multicolumn{4}{|c|}{ARM1176JZF-S}		 & ARM Cortex-A7	 \\ \hline
-																					 & Kern  & \multicolumn{4}{|c|}{1}				 & 4							 \\ \hline
-																					 & Takt  & \multicolumn{4}{|c|}{700 MHz}					 & 900 MHz		 		 \\ \hline
-																					 &Architektur& \multicolumn{4}{|c|}{ARMv6}       & ARMv7					 \\ \hline
-\multicolumn{2}{|c|}{\shortstack{Anzahl der USB 2.0\\ Anschlüsse}}& \multicolumn{2}{|c|}{-}& 2  & \multicolumn{2}{|c|}{4}	 \\ \hline
-			\multicolumn{2}{|c|}{Ethernet}							 & \multicolumn{2}{|c|}{-}& \multicolumn{3}{|c|}{10 und 100 MBit}\\ \hline
-			\multicolumn{2}{|c|}{Pin}							 			 & 26 		 &	 40  & 26		& \multicolumn{2}{|c|}{40}\\ \hline
-			\multicolumn{2}{|c|}{GPIO-Pins}							 & 17 		 &	 26  & 17		& \multicolumn{2}{|c|}{26}\\ \hline
-			\multicolumn{2}{|c|}{Weitere Schnittstellen} & \multicolumn{5}{|c|}{1 × CSI, 1 × DSI, 1 × I$^2"$S} \\ \hline
-			\multicolumn{2}{|c|}{Stromversorgung}				 & \multicolumn{5}{|c|}{15,0 V; über einen Micro-USB-Anschluss (Micro-USB-B)} \\ \hline
-		\end{tabular}
-	\caption{Raspberry Pi Modelle}
-	\label{tab:RaspberryPiModelle}
-\end{table}
 
 
 \subsection{Drei Gestaltgesetze und eine harmonische Farbauswahl.}
@@ -250,11 +224,12 @@ Viel Spaß! Für Rückfragen, die diese Vorlage betreffen, stehe ich Ihnen gern 
 %\addcontentsline{toc}{section}{Quellenverzeichnis}
 %\renewcommand{\refname}{Quellenverzeichnis}
 %\renewcommand{\thebibliography}{Internetrecherche}
-%\renewcommand{\bibname}{Literatur}}
+\renewcommand{\bibname}{Literatur}
 \nocite{*} % adds all entries in the bib file to the bibliography
-\printbibliography[nottype = online, title = {Quellenverzeichnis}]
+
+\printbibliography[nottype = online, title = Literaturverzeichnis,heading	= subbibliography]
 \printbibliography[
-	type 		= online,
+	type 		= online,						% Put only references of the type "online" here.
 	title		= {Online-Quellen},	%Setzt den Titel für den subbibliograpy			 
 	heading	= subbibliography
 ]
