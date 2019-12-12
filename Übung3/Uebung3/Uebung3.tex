@@ -1,6 +1,3 @@
-%% Basierend auf einer TeXnicCenter-Vorlage von Mark Müller
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % Wählen Sie die Optionen aus, indem Sie % vor der Option entfernen  
 % Dokumentation des KOMA-Script-Packets: scrguide
 
@@ -17,8 +14,8 @@
 twoside,							% Doppelseiten
 %twocolumn,						% zweispaltiger Satz
 %halfparskip*,					% Absatzformatierung s. scrguide 3.1
-headsepline=true,				% Trennline zum Seitenkopf	
-footsepline=true,				% Trennline zum Seitenfuß
+headsepline = true,				% Trennline zum Seitenkopf	
+footsepline = true,				% Trennline zum Seitenfuß
 %titlepage,						% Titelei auf eigener Seite
 %normalheadings,				% Überschriften etwas kleiner (smallheadings)
 headings=normal,
@@ -26,17 +23,16 @@ headings=normal,
 %liststotoc,					% Abb.- und Tab.verzeichnis im Inhalt
 %bibtotoc,						% Literaturverzeichnis im Inhalt2
 %index=totoc, 					% Index im Inhaltsverzeichnis aufführen
-listof=totoc,					% Verzeichnisse im Inhaltsverzeichnis aufführen
-bibliography=totoc,			% Literaturverzeichnis im Inhaltsverzeichnis aufführen
-listof=entryprefix,
+listof = totoc,					% Abb.- und Tab.verzeichnis im Inhaltsverzeichnis aufführen
+bibliography = totoc,		% Literaturverzeichnis im Inhaltsverzeichnis aufführen
+listof = entryprefix,		%jeden Eintrag in den Verzeichnissen mit dem jeweiligen Eintragungstyp versehen
 %numbers=noenddot,			%Keine Punkte am Ende des TOC
 %toc=flat,						%Flache TOC
 %abstracton,					% Überschrift über der Zusammenfassung an	
 %leqno,   						% Nummerierung von Gleichungen links
 %fleqn,								% Ausgabe von Gleichungen linksbündig
-%draft								% überlangen Zeilen in Ausgabe gekennzeichnet
+%, draft								% überlangen Zeilen in Ausgabe gekennzeichnet
 %chapterprefix=on,
-%, draft
 ]
 {scrartcl}
 
@@ -75,23 +71,16 @@ listof=entryprefix,
 	, bibwarn = true
 	, bibencoding = utf8
 	, style = alphabetic
-	, sorting = ydnt,
+	, sorting = none
 	, maxbibnames = 99
 	, date = long
 	, abbreviate = false
 	, language = ngerman
 	%sorting = ynt
-]{biblatex}
-%\usepackage[
-%	backend = biber,
-%	natbib  = true,
-%	bibwarn = true,
-%   style	  = alphabetic,
-%	sorting = ydnt,
 %   %isbn	= true,		%default ist true
 %   %url	= true,		%default ist true
 %   %doi	= true,		%default ist true
-%]{biblatex}
+]{biblatex}
 \addbibresource{Literatur.bib}
 \usepackage{csquotes}
 
@@ -144,10 +133,10 @@ listof=entryprefix,
 \section{Erstelle die Startseite (Home) einer beliebigen Webseite(Titel, Text, Buttons, Links) unter Berücksichtigung der Gestaltgesetze und Farbwahl.}
 \label{sec:AufgabeEins}
 Beim geschriebenen HTML-Code handelt es sich um folgenden:
-
-\lstinputlisting[language=HTML, caption=Webseite]{../index.html} \quelle{ich}
+\cite{Hönemann2019:Bewegungswahrnehmung}
+\lstinputlisting[language=HTML, caption=Webseite]{../index.html} \quelle{\cites[vgl.][2]{Hönemann2019:Farbwahrnehmung}[10]{Hönemann2019:Bewegungswahrnehmung}[30]{Schultz:Gestaltgesetze}}
 \cite[vgl.][2]{Hönemann2019:Farbwahrnehmung} \\
-\cite[vgl.][2][10][30]{Hönemann2019:Farbwahrnehmung, Hönemann2019:Bewegungswahrnehmung, Schultz:Gestaltgesetze} \\
+\cites[vgl.][2]{Hönemann2019:Farbwahrnehmung}[10]{Hönemann2019:Bewegungswahrnehmung}[30-40]{Schultz:Gestaltgesetze} \\
 \cite{Hönemann2019:Bewegungswahrnehmung} \\
 \cite{Schultz:Gestaltgesetze}\\
 \cite{GoldsteinE.Bruce2015W:dG}\\
@@ -206,6 +195,7 @@ Viel Spaß! Für Rückfragen, die diese Vorlage betreffen, stehe ich Ihnen gern 
 
 %% Erzeugung von Verzeichnissen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
+\pagenumbering{Roman}
 \listoftables			% Tabellenverzeichnis
 \newpage
 \listoffigures				% Abbildungsverzeichnis
@@ -213,7 +203,7 @@ Viel Spaß! Für Rückfragen, die diese Vorlage betreffen, stehe ich Ihnen gern 
 \lstlistoflistings
 \newpage
 %% Bibliographie unter Verwendung von dinnat %%%%%%%%%%%%%%%%%%%%%%%%%%
-%\setbibpreamble{Präambel}		% Text vor dem Verzeichnis
+\newpage
 %\bibliographystyle{dinat}
 %\bibliography{bibliographie}	% Sie benötigen einen *.bib-Datei
 %\addcontentsline{toc}{chapter}{Quellenverzeichnis}
@@ -221,19 +211,18 @@ Viel Spaß! Für Rückfragen, die diese Vorlage betreffen, stehe ich Ihnen gern 
 %\printbibliography
 %\printbibheading
 %\renewcaptionname{ngerman}{\bibname}{Quellenverzeichnis}             %Umbennenen des Bibliography Titels
-\newpage
-\pagenumbering{Roman}
+\setbibpreamble{Die Quellen bestehen sowohl auseinem Buch, den Vorlesungsfolien, als auch Internetquellen.}		% Text vor dem Verzeichnis
 %\addcontentsline{toc}{section}{Quellenverzeichnis}
 %\renewcommand{\refname}{Quellenverzeichnis}
 %\renewcommand{\thebibliography}{Internetrecherche}
 \renewcommand{\bibname}{Literatur}
 \nocite{*} % adds all entries in the bib file to the bibliography
-
-\printbibliography[nottype = online, title = Literaturverzeichnis,heading	= subbibliography]
+\printbibheading[title={Quellenverzeichnis}]
+\printbibliography[nottype = online, heading	= subbibliography, title = Literaturverzeichnis]
 \printbibliography[
 	type 		= online,						% Put only references of the type "online" here.
-	title		= {Online-Quellen},	%Setzt den Titel für den subbibliograpy			 
-	heading	= subbibliography
+	heading	= subbibliography,
+	title		= {Online-Quellen}	%Setzt den Titel für den subbibliograpy			 
 ]
 
 \end{document}
